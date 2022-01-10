@@ -1,0 +1,9 @@
+console.log(longestPalindrome(""));
+console.log(longestPalindrome("a"));
+console.log(longestPalindrome("ab"));
+console.log(longestPalindrome("aa"));
+console.log(longestPalindrome("aba"));
+console.log(longestPalindrome("abba"));
+console.log(longestPalindrome("aaaa"));
+console.log(longestPalindrome("forgeeksskeegfor"));
+console.log(longestPalindrome("abacdabadacbcda"));
