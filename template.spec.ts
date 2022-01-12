@@ -1,7 +1,5 @@
-describe("template", () => {
-  test("run", () => {
-    expect(template("palindrome 👯")).toBe("👯 emordnilap");
-  });
+test("template", () => {
+  expect(template("palindrome 🐍")).toBe("🐍 emordnilap");
 });
 
 function template(str: string): string {
