@@ -4,11 +4,12 @@
   "description": "A TypeScript code sandbox with Jest, ESLint, Prettier.",
   "scripts": {
     "test": "jest --watch",
-    "lint": "eslint src/ test/",
-    "format": "eslint --fix src/ test/",
+    "lint": "eslint *.spec.ts",
+    "format": "eslint --fix *.spec.ts",
     "check": "tsc --noEmit",
     "build": "tsc",
-    "precommit": "npm run fmt && npm run type",
+    "precommit": "npm run format && npm run check",
+    "githook": "grep -qxF 'npm run precommit' .git/hooks/pre-commit || echo 'npm run precommit' >> .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit",
     "start": "run() { local fn=\"$1\"; if ! [[ \"${fn}\" == *.spec.ts ]]; then fn+='.spec.ts'; fi; if ! [[ -f \"${fn}\" ]]; then cp ./template.spec.ts \"${fn}\"; sed -i '' \"s/template/$1/g\" \"${fn}\"; fi; vim \"${fn}\" -c \"vert term npm t $1\" -c \"winc l\" -c 'exe \"vertical resize \" . (winwidth(0) * 4/3)'; }; run"
   },
   "repository": {
