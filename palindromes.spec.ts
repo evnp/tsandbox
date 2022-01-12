@@ -1,11 +1,63 @@
+import { genRandomStrings } from "./util";
+
+describe("longest palindromic substring", () => {
+  let randomStringInputs: string[];
+  const randomStringOutputs: Record<string, string> = {};
+  beforeAll(() => (randomStringInputs = genRandomStrings(500)));
+
+  test("recursive brute force", () => {
+    expect(longestPalindromeBrute("")[0]).toBe("");
+    expect(longestPalindromeBrute("a")[0]).toBe("a");
+    expect(longestPalindromeBrute("ab")[0]).toBe("a");
+    expect(longestPalindromeBrute("aa")[0]).toBe("aa");
+    expect(longestPalindromeBrute("aba")[0]).toBe("aba");
+    expect(longestPalindromeBrute("abba")[0]).toBe("abba");
+    expect(longestPalindromeBrute("aaaa")[0]).toBe("aaaa");
+    expect(longestPalindromeBrute("forgeeksskeegfor")[0]).toBe("geeksskeeg");
+    expect(longestPalindromeBrute("abacdabadacbcda")[0]).toBe("dabad");
+  });
+
+  test("recursive memoized", () => {
+    expect(longestPalindromeMemo("")).toBe("");
+    expect(longestPalindromeMemo("a")).toBe("a");
+    expect(longestPalindromeMemo("ab")).toBe("a");
+    expect(longestPalindromeMemo("aa")).toBe("aa");
+    expect(longestPalindromeMemo("aba")).toBe("aba");
+    expect(longestPalindromeMemo("abba")).toBe("abba");
+    expect(longestPalindromeMemo("aaaa")).toBe("aaaa");
+    expect(longestPalindromeMemo("forgeeksskeegfor")).toBe("geeksskeeg");
+    expect(longestPalindromeMemo("abacdabadacbcda")).toBe("dabad");
+    for (const str of randomStringInputs) {
+      const res = longestPalindromeMemo(str);
+      expect(res).toBe(Array.from(res).reverse().join(""));
+      randomStringOutputs[str] = res;
+    }
+  });
+
+  test("iterative", () => {
+    expect(longestPalindromeIter("")).toBe("");
+    expect(longestPalindromeIter("a")).toBe("a");
+    expect(longestPalindromeIter("ab")).toBe("a");
+    expect(longestPalindromeIter("aa")).toBe("aa");
+    expect(longestPalindromeIter("aba")).toBe("aba");
+    expect(longestPalindromeIter("abba")).toBe("abba");
+    expect(longestPalindromeIter("aaaa")).toBe("aaaa");
+    expect(longestPalindromeIter("a2aa11a")).toBe("a11a");
+    expect(longestPalindromeIter("forgeeksskeegfor")).toBe("geeksskeeg");
+    expect(longestPalindromeIter("abacdabadacbcda")).toBe("dabad");
+    for (const str of randomStringInputs) {
+      const res = longestPalindromeIter(str);
+      expect(res).toBe(Array.from(res).reverse().join(""));
+      expect(str + " : " + res).toBe(str + " : " + randomStringOutputs[str]);
+    }
+  });
+});
+
 // O(n^3) brute force
 // O(n^2) memoized time complexity
 // O(n^2) memoized space complexity
 
-export function longestPalindromeBrute(
-  str: string,
-  log = ""
-): [string, string] {
+function longestPalindromeBrute(str: string, log = ""): [string, string] {
   let subStrA = "";
   let subStrB = "";
   let subStrC = "";
@@ -44,7 +96,7 @@ export function longestPalindromeBrute(
   }
 }
 
-export function longestPalindromeMemo(str: string): string {
+function longestPalindromeMemo(str: string): string {
   const memo: Array<Array<[number, number]>> = [];
   //let stackSize = 0;
 
@@ -117,7 +169,7 @@ export function longestPalindromeMemo(str: string): string {
 
 // O(n^2) time complexity
 // O(1)   space complexity
-export function longestPalindromeIter(str: string): string {
+function longestPalindromeIter(str: string): string {
   // lsi : longest start idx
   // lei : longest end idx
   let [lsi, lei] = [0, 0];

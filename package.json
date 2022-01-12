@@ -3,11 +3,13 @@
   "version": "0.0.1",
   "description": "A TypeScript code sandbox with Jest, ESLint, Prettier.",
   "scripts": {
-    "build": "tsc",
     "test": "jest --watch",
     "lint": "eslint src/ test/",
     "format": "eslint --fix src/ test/",
-    "edit": "run() { vim -O \"./test/$1.test.ts\" \"./src/$1.ts\" -c \"bel term npm t $1\" -c \"winc l\"; }; run"
+    "check": "tsc --noEmit",
+    "build": "tsc",
+    "precommit": "npm run fmt && npm run type",
+    "start": "run() { local fn=\"$1\"; if ! [[ \"${fn}\" == *.spec.ts ]]; then fn+='.spec.ts'; fi; if ! [[ -f \"${fn}\" ]]; then cp ./template.spec.ts \"${fn}\"; sed -i '' \"s/template/$1/g\" \"${fn}\"; fi; vim \"${fn}\" -c \"vert term npm t $1\" -c \"winc l\" -c 'exe \"vertical resize \" . (winwidth(0) * 4/3)'; }; run"
   },
   "repository": {
     "type": "git",

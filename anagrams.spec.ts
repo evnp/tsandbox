@@ -1,4 +1,16 @@
-export function anagrams(words: string[]): string[] {
+test("anagrams", () => {
+  expect(
+    anagrams([
+      "anagram",
+      "gramana",
+      "nothing",
+      "palindrome 👯",
+      "👯 emordnilap",
+    ])
+  ).toStrictEqual(["anagram", "gramana", "palindrome 👯", "👯 emordnilap"]);
+});
+
+function anagrams(words: string[]): string[] {
   let charIdxMax = 0;
   const charMap = new Map();
 

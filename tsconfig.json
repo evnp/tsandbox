@@ -10,6 +10,6 @@
     "lib": ["esnext", "dom"],
     "outDir": "build/"
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "include": ["**/*.spec.ts"],
   "exclude": ["node_modules"]
 }
